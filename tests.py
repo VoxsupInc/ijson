@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 import unittest
 from io import BytesIO, StringIO
-from decimal import Decimal
 import threading
 from importlib import import_module
 
@@ -50,7 +49,7 @@ JSON_EVENTS = [
                 ('map_key', 'integer'),
                 ('number', 0),
                 ('map_key', 'double'),
-                ('number', Decimal('0.5')),
+                ('number', float('0.5')),
                 ('map_key', 'exponent'),
                 ('number', 100),
                 ('map_key', 'long'),
@@ -150,7 +149,7 @@ class Parse(object):
     def test_numbers(self):
         events = list(self.backend.basic_parse(BytesIO(NUMBERS_JSON)))
         types = [type(value) for event, value in events if event == 'number']
-        self.assertEqual(types, [int, Decimal, Decimal])
+        self.assertEqual(types, [int, float, float])
 
     def test_invalid(self):
         for json in INVALID_JSONS:
@@ -231,7 +230,7 @@ class Common(unittest.TestCase):
                    'boolean': False,
                    'true': True,
                    'integer': 0,
-                   'double': Decimal('0.5'),
+                   'double': float('0.5'),
                    'exponent': 100,
                    'long': 10000000000,
                 },

@@ -26,7 +26,7 @@ _callback_data = [
     # Used to define the Callbacks structure and actual callback functions
     # inside the parse function.
     ('null', C_EMPTY, lambda: None),
-    ('boolean', C_INT, lambda v: bool(v)),
+    ('boolean', C_INT, bool),
     # "integer" and "double" aren't actually yielded by yajl since "number"
     # takes precedence if defined
     ('integer', C_LONG, lambda v, l: int(string_at(v, l))),
@@ -69,7 +69,7 @@ def basic_parse(f, allow_comments=False, check_utf8=False, buf_size=64 * 1024):
     events = []
 
     def callback(event, func_type, func):
-        def c_callback(context, *args):
+        def c_callback(_, *args):
             events.append((event, func(*args)))
             return 1
         return func_type(c_callback)

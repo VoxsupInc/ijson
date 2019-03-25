@@ -1,8 +1,6 @@
 '''
 Backend independent higher level interfaces, common exceptions.
 '''
-import decimal
-
 
 class JSONError(Exception):
     '''
@@ -113,16 +111,16 @@ class ObjectBuilder(object):
         if event == 'map_key':
             self.key = value
         elif event == 'start_map':
-            map = {}
-            self.containers[-1](map)
+            _map = {}
+            self.containers[-1](_map)
             def setter(value):
-                map[self.key] = value
+                _map[self.key] = value
             self.containers.append(setter)
         elif event == 'start_array':
             array = []
             self.containers[-1](array)
             self.containers.append(array.append)
-        elif event == 'end_array' or event == 'end_map':
+        elif event in ['end_array', 'end_map']:
             self.containers.pop()
         else:
             self.containers[-1](value)
@@ -156,7 +154,8 @@ def number(str_value):
     Converts string with a numeric value into an int or a Decimal.
     Used in different backends for consistent number representation.
     '''
-    number = decimal.Decimal(str_value)
-    if not ('.' in str_value or 'e' in str_value or 'E' in str_value):
-        number = int(number)
-    return number
+    for v in str_value:
+        if v == '.' or v == 'e' or v == 'E':
+            return float(str_value)
+
+    return int(str_value)

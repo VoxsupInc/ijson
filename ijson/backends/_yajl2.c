@@ -215,7 +215,7 @@ static int basicparse_init(BasicParseGen *self, PyObject *args, PyObject *kwargs
 
 	Py_ssize_t buf_size = 64*1024;
 	PyObject *read = NULL; /* the read method */
-	PyObject *decimal = NULL; /* The decimal.Decimal constructor */
+	PyObject *decimal = NULL; /* The float constructor */
 	PyObject *allow_comments = Py_False;
 	PyObject *multiple_values = Py_False;
 
