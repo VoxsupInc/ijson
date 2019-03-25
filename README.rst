@@ -7,6 +7,7 @@ ijson
 
 Ijson is an iterative JSON parser with a standard Python iterator interface.
 
+This fork descends from rtobar's, and merges their c type backend. It also forgoes python Decimal types for regular Floats.
 
 Usage
 =====

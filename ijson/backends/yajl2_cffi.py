@@ -4,7 +4,6 @@ CFFI-Wrapper for YAJL C library version 2.x.
 
 from cffi import FFI
 import functools
-import sys
 
 from ijson import common, backends
 from ijson.compat import b2s
